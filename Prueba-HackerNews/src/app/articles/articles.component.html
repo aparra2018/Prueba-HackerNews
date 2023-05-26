@@ -1,0 +1,57 @@
+<div class="container-fluid" class="lead">
+  <h1 class="display-1">Noticias- Página {{ page }}</h1>
+  <div class="row">
+    <div class="col">
+      <div class="container">
+        <div
+          *ngIf="titulares.length == 50; then loadedBlock; else loadingBlock"
+        ></div>
+        <ng-template #loadedBlock>
+          <div class="row" *ngFor="let items of titulares">
+            <ul class="list-group">
+              <div class="row">
+                <li
+                  class="list-group-item list-group-item-info list-group-item-action flex-column align-items-start"
+                >
+                  <h6 class="lead">
+                    <div class=" justify-content-between align-items-center">
+                    <span class="text-success ">[{{ items["id"] }}]</span>
+                    {{ items["title"] }}
+                    <span class="badge badge-primary badge-pill text-primary"
+                      >({{ items["descendants"] }})</span
+                    >
+                  </div>
+                  </h6>
+                  <p (click)="showStory(items['id'])" class="mb-1">
+                    <u>Ver Comentarios</u>
+                  </p>
+                </li>
+                
+              </div>
+            </ul>
+          </div>
+          <div *ngIf="this.page !== '1'; then displayBtn2"></div>
+          <div *ngIf="this.page !== '4'; then displayBtn1"></div>
+          <ng-template #displayBtn2>
+            <button class="btn btn-warning" (click)="backPage()">
+              Página Anterior
+            </button>
+          </ng-template>
+          <ng-template #displayBtn1>
+            <button class="btn btn-warning" (click)="refreshPage()">
+              Página Siguiente
+            </button>
+          </ng-template>
+        </ng-template>
+        <ng-template #loadingBlock>
+          <br />
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only"></span>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
